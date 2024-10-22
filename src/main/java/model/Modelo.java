@@ -4,13 +4,28 @@
  */
 package model;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  *
  * @author vanessalagomachado
  */
-public class Modelo {
+@Entity
+@Table(name = "tb_modelo")
+public class Modelo implements Serializable {
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id
     private int id;
+    
+    @Column(name = "descr", length = 100, nullable = false)
     private String descricao;
+    
     private Marca marca;
 
     public int getId() {
