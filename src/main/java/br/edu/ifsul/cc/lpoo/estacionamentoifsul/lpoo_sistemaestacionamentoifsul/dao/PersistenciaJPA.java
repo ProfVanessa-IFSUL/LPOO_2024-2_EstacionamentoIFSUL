@@ -12,6 +12,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import model.Pessoa;
+import model.VinculoPessoa;
 
 /**
  *
@@ -51,6 +52,9 @@ public class PersistenciaJPA implements InterfaceBD {
         entity = getEntityManager();
         try {
             entity.getTransaction().begin();
+            if (!entity.contains(o)) {
+                o = entity.merge(o); // Anexa o objeto ao contexto de persistência, se necessário
+            }
             entity.persist(o);
             entity.getTransaction().commit();
         } catch (Exception e) {
@@ -65,9 +69,13 @@ public class PersistenciaJPA implements InterfaceBD {
         entity = getEntityManager();
         try {
             entity.getTransaction().begin();
+            if (!entity.contains(o)) {
+                o = entity.merge(o); // Anexa o objeto ao contexto de persistência, se necessário
+            }
             entity.remove(o);
             entity.getTransaction().commit();
         } catch (Exception e) {
+            System.err.println("Erro ao remover item: "+e);
             if (entity.getTransaction().isActive()) {
                 entity.getTransaction().rollback();
             }
@@ -101,4 +109,36 @@ public class PersistenciaJPA implements InterfaceBD {
 
     }
 
+    
+    public List<Pessoa> getPessoas(VinculoPessoa vinculoSelecionado) {
+        entity = getEntityManager();
+
+        try {
+            TypedQuery<Pessoa> query
+                    = entity.createQuery("Select p from Pessoa p where p.vinculoPessoa = '"
+                            +vinculoSelecionado+"'", 
+                            Pessoa.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            System.err.println("Erro ao buscar Pessoas: " + e);
+            return null;
+        }
+
+    }
+    
+    public List<Pessoa> getPessoas(String nome) {
+        entity = getEntityManager();
+
+        try {
+            TypedQuery<Pessoa> query
+                    = entity.createQuery("Select p from Pessoa p where lower(p.nome) LIKE :n", 
+                            Pessoa.class);
+            query.setParameter("n", "%"+nome.toLowerCase()+"%");
+            return query.getResultList();
+        } catch (Exception e) {
+            System.err.println("Erro ao buscar Pessoas: " + e);
+            return null;
+        }
+
+    }
 }
