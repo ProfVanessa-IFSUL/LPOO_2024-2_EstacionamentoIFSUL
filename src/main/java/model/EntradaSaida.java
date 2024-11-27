@@ -21,6 +21,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -36,6 +38,7 @@ public class EntradaSaida implements Serializable{
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date data;
     
@@ -52,10 +55,14 @@ public class EntradaSaida implements Serializable{
     @JoinColumn(name = "es_veiculo")
     private final Veiculo veiculo;
 
+    public EntradaSaida() {
+        veiculo = null;
+    }
+
+    
     public EntradaSaida(TipoMovimentacao tipo, Veiculo veiculo) {
         tipoMovimentacao = tipo;
         this.veiculo = veiculo;
-        this.veiculo.addMovimentacao(this);
         
         data = new Date();
     }
@@ -88,6 +95,11 @@ public class EntradaSaida implements Serializable{
 
     public Veiculo getVeiculo() {
         return veiculo;
+    }
+
+    @Override
+    public String toString() {
+        return veiculo.getPlaca();
     }
 
     

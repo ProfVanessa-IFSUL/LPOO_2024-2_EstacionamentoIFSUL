@@ -33,6 +33,7 @@ public class MainJFrame extends javax.swing.JFrame {
         menuMovimentacoes = new javax.swing.JMenu();
         miEntradaVeiculo = new javax.swing.JMenuItem();
         miSaidaVeiculo = new javax.swing.JMenuItem();
+        miMovDia = new javax.swing.JMenuItem();
         menuAjuda = new javax.swing.JMenu();
         miSobre = new javax.swing.JMenuItem();
 
@@ -66,6 +67,14 @@ public class MainJFrame extends javax.swing.JFrame {
         miSaidaVeiculo.setText("Saída");
         menuMovimentacoes.add(miSaidaVeiculo);
 
+        miMovDia.setText("Movimentações do Dia");
+        miMovDia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miMovDiaActionPerformed(evt);
+            }
+        });
+        menuMovimentacoes.add(miMovDia);
+
         jMenuBar1.add(menuMovimentacoes);
 
         menuAjuda.setText("Ajuda");
@@ -97,7 +106,8 @@ public class MainJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void miVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miVeiculoActionPerformed
-        // TODO add your handling code here:
+        TelaVeiculosJFrame telaVeiculo = new TelaVeiculosJFrame();
+        telaVeiculo.setVisible(true);
     }//GEN-LAST:event_miVeiculoActionPerformed
 
     private void miSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSobreActionPerformed
@@ -109,6 +119,11 @@ public class MainJFrame extends javax.swing.JFrame {
         TelaPessoa telaPessoa = new TelaPessoa();
         telaPessoa.setVisible(true);
     }//GEN-LAST:event_miPessoaActionPerformed
+
+    private void miMovDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miMovDiaActionPerformed
+       TelaMovimentacoesDia telaMovimentacoes = new TelaMovimentacoesDia();
+       telaMovimentacoes.setVisible(true);
+    }//GEN-LAST:event_miMovDiaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -151,6 +166,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JMenu menuCadastro;
     private javax.swing.JMenu menuMovimentacoes;
     private javax.swing.JMenuItem miEntradaVeiculo;
+    private javax.swing.JMenuItem miMovDia;
     private javax.swing.JMenuItem miPessoa;
     private javax.swing.JMenuItem miSaidaVeiculo;
     private javax.swing.JMenuItem miSobre;
